@@ -1,0 +1,9 @@
+03/18/2021
+1. Diseñar vistas (get)
+2. Generar formulario de nuevo pokemon (create, edit)
+3. Todo en inglés
+4. Mandar wha a las 12:50 sobre si terminé o no
+
+5. Mostrar vista show completa con boton que lleve a vista editar
+6. Mostrar index completo con redireccion a show de cada pokemon
+7.
