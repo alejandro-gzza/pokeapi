@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Pokemon;
+use Illuminate\Support\Facades\Route;
 use App\Factories\PokemonFactory;
+use App\Helpers\Pokeapi;
+use App\Models\Pokemon;
 
 class PokemonController extends Controller
 {
@@ -28,9 +30,11 @@ class PokemonController extends Controller
      */
     public function index(){
         $pokemon = Pokemon::all();
+        $route_name = Route::currentRouteName();
 
         return view('pokemon.index')->with([
-            'pokemon' => $pokemon
+            'pokemon' => $pokemon,
+            'route_name' => $route_name
             // permite trabajar la variable en la vista
         ]);
     }
@@ -74,8 +78,11 @@ class PokemonController extends Controller
      */
     public function show($pokemon_id){
         $pokemon = Pokemon::find($pokemon_id);
+        $route_name = Route::currentRouteName();
+
         return view('pokemon.show')->with([
-            'pokemon' => $pokemon
+            'pokemon' => $pokemon,
+            'route_name' => $route_name
             // permite trabajar la variable en la vista
         ]);
 
@@ -120,5 +127,52 @@ class PokemonController extends Controller
         $pokemon = Pokemon::find($pokemon_id);
         $this->factory->delete($pokemon);
         return redirect()->route('pokemon.index');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Prefix 'pokemon/api/'
+    |--------------------------------------------------------------------------
+    */
+
+    public function api_name($name){
+        $api = new Pokeapi;
+        $pokemon = $api->get_pokemon_by_id($name)['body'];
+        return view('api.show')->with([
+            'pokemon' => $pokemon
+        ]);
+    }
+
+    public function api_id($id){
+        $api = new Pokeapi;
+        $pokemon = $api->get_pokemon_by_id($id)['body'];
+
+        return view('api.show')->with([
+            'pokemon' => $pokemon
+        ]);
+    }
+    /**
+     * Store a pokemon from the api
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return Redirection
+     */
+    public function api_store(Request $request){
+        $params = $request->all();
+        Pokemon::validate($params, 'api')->validate();
+        $api = new Pokeapi;
+        $data = $api->get_pokemon_by_id($params['pokemon_id'])['body'];
+        $params['name'] = $data->name;
+        $params['front_img'] = $data->sprites->front_default;
+        $params['back_img'] = $data->sprites->back_default;
+        $params['weight'] = $data->weight;
+        $params['height'] = $data->height;
+        $params['type'] = $data->types[0]->type->name;
+        $params['hp'] = $data->stats[0]->base_stat;
+        $params['attack'] = $data->stats[1]->base_stat;
+        $params['defense'] = $data->stats[2]->base_stat;
+
+        $pokemon = $this->factory->save($params);
+        return redirect()->route('pokemon.show', [$pokemon->id]);
     }
 }

@@ -6,4 +6,25 @@
 
 5. Mostrar vista show completa con boton que lleve a vista editar
 6. Mostrar index completo con redireccion a show de cada pokemon
-7.
+
+19/03/21
+1. Generar User y UserPokemon controller y sus funciones (vacias, pero darlas de alta con sus respectivos comentarios)
+2. Generar vistas de las rutas get nuevas que se añadieron
+3. Generar nueva migracion 'php artisan make:migration create_user_pokemon_table' campos: user_id, pokemon_id (int), pero no correrlo para no crear la tabla en la base de datos
+4. Generar vista partial de la card de pokemon (para utilizarla en index y en show)
+
+22/03/2021
+1. En vista show de usuario mostrar tarjetas de pokemon que tenga, pero sin link a show pokemon.
+2. En vista show de usuario mostrar boton de agregar pokemon.
+3. Generar formulario para agregar un pokemon a un usuario. (un tag select con foreach por cada pokemon y el value será el id [no pokemon_id]).
+3.1 El atributo action del form debe llevar a la ruta users.pokemon.store.
+4. Dentro de función store, obtener el usuario, pokemon y el attach
+5 Hacer un botón por cada tarjeta que diga eliminar (formulario con un botón/ delete).
+5.1 Crear lógica de detach (funcion delete/userpokemonscontroller).
+
+23/03/21
+    1. Obtener por id desde api.
+    2. Routes\web.php agregar prefix\api\{name} y prefix api por id
+    2.1 En pokemon controller agregar funcion api_name, y api_id debe hacer uso del helper pokeapi y regresar una vista de ver el pokemon tipo show y pasarle a la vista
+    el contenido de la llamada
+    2.2 Hacer vista api.show que sea exactamente igual a la de pokemon.show

@@ -1,9 +1,12 @@
 @extends('layouts.main')
 @section('content_main')
     <div class="row">
-        <div class="col lg-12">
-            <h1 style="text-align: center">All saved Pokemon!</h1>
+        <div class="col">
+            <h1 style="text-align: center">User #{{ $user_id }}</h1>
         </div>
+        <div class="col">
+            <a href="{{ route('users.pokemon.create', $user_id ) }}" class="btn btn-warning btn-lg active btn-block" role="button" aria-pressed="true">Add pokemon</a>
+</div>
     </div>
 
     <div class="row row-cols-1 row-cols-md-3 g-4">

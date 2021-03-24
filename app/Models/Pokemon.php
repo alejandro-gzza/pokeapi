@@ -53,11 +53,20 @@ class Pokemon extends Model
             'defense' => $RequiredInteger
         );
 
-        if($scenario == 'edit'){
-            $rules['pokemon_id'] = 'bail|required|unique:pokemon,pokemon_id,'.$extra['pokemon_id'].'|integer';
-            $rules['name'] = 'required|unique:pokemon,name,'.$extra['pokemon_id'].'|max:50|string';
-            $rules['front_img'] = 'required|unique:pokemon,front_img,'.$extra['pokemon_id'].'|url';
-            $rules['back_img'] = 'required|unique:pokemon,back_img,'.$extra['pokemon_id'].'|url';
+        switch($scenario){
+            case 'edit':
+                $rules['pokemon_id'] = 'bail|required|unique:pokemon,pokemon_id,'.$extra['pokemon_id'].'|integer';
+                $rules['name'] = 'required|unique:pokemon,name,'.$extra['pokemon_id'].'|max:50|string';
+                $rules['front_img'] = 'required|unique:pokemon,front_img,'.$extra['pokemon_id'].'|url';
+                $rules['back_img'] = 'required|unique:pokemon,back_img,'.$extra['pokemon_id'].'|url';
+            break;
+
+            case 'api':
+                $rules = ['pokemon_id' => 'bail|required|unique:pokemon|integer|min:1|max:898'];
+            break;
+
+            default:
+            break;
         }
         return $rules;
     }
@@ -92,7 +101,9 @@ class Pokemon extends Model
     /*-------------------------------------------------------------------------------------
     Relationships
     ------------------------------------------------------------------------------------- */
-
+    public function users(){
+        return $this->belongsToMany('App\Models\User', 'user_pokemon')->withTimestamps();
+    }
 
 
 

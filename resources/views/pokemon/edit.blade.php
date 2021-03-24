@@ -7,6 +7,6 @@
     <form action="{{route('pokemon.delete', [$pokemon->id])}}" method="POST">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger btn-lg btn-block">Delete</button>
+        <button type="submit" class="btn btn-outline-danger btn-lg btn-block">Delete</button>
     </form>
 @endsection
