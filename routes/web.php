@@ -28,7 +28,7 @@ Route::prefix('pokemon')->group(function(){
     Route::get('/create', [App\Http\Controllers\PokemonController::class, 'create'])->name('pokemon.create'); // Create
     Route::post('/store', [App\Http\Controllers\PokemonController::class, 'store'])->name('pokemon.store'); // Create
 
-    Route::prefix('{pokemon_id}')->group(function(){
+    Route::prefix('{pokemon_id}')->middleware('getPokemon')->group(function(){
         Route::get('/', [App\Http\Controllers\PokemonController::class, 'show'])->name('pokemon.show'); // Read
         Route::get('/edit', [App\Http\Controllers\PokemonController::class, 'edit'])->name('pokemon.edit'); // Update
         Route::post('/update', [App\Http\Controllers\PokemonController::class, 'update'])->name('pokemon.update'); // Update
@@ -54,7 +54,7 @@ Route::prefix('pokemon')->group(function(){
 Route::prefix('users')->group(function(){
     Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
-    Route::prefix('{user_id}')->group(function(){
+    Route::prefix('{user_id}')->middleware('getUsers')->group(function(){
         Route::get('/', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
 
         Route::prefix('pokemon')->group(function(){

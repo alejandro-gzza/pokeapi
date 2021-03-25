@@ -28,3 +28,12 @@
     2.1 En pokemon controller agregar funcion api_name, y api_id debe hacer uso del helper pokeapi y regresar una vista de ver el pokemon tipo show y pasarle a la vista
     el contenido de la llamada
     2.2 Hacer vista api.show que sea exactamente igual a la de pokemon.show
+
+24/03/21
+    1. Modificar update, edit, y delete de prefix pokemon para utlizar el request del middleware como en show.      // Error al editar/ actualizar info de los pokemon, sólo sirve
+    con los pokemon cuyo pokemon id sea igual al id de nuestra base de datos.
+    2. Crear un middleware para los usuarios.       // Debe terminar en plural o en singular? = Singular
+    2.1 Guardar usuario encontrado en variable request. user = request->user
+
+25/03/21
+Temas: view composer, javascript (como cargar un solo archivo)

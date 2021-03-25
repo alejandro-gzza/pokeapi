@@ -23,11 +23,13 @@ class UserController extends Controller
     /**
      * View a specific user
      *
+     * @param \Illuminate\Http\Request $request
      * @param int $user_id
      * @return View
      */
-    public function show($user_id){
-        $user = User::find($user_id);
+    public function show($user_id, Request $request){
+        //$user = User::find($user_id);
+        $user = $request->user;
         $pokemon = $user->pokemon;
         $route_name = Route::currentRouteName();
         return view('users.show')->with([

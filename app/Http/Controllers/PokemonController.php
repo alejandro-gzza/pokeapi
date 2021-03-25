@@ -29,11 +29,11 @@ class PokemonController extends Controller
      * @return View
      */
     public function index(){
-        $pokemon = Pokemon::all();
+        $pokemons = Pokemon::all();
         $route_name = Route::currentRouteName();
 
         return view('pokemon.index')->with([
-            'pokemon' => $pokemon,
+            'pokemons' => $pokemons,
             'route_name' => $route_name
             // permite trabajar la variable en la vista
         ]);
@@ -74,14 +74,13 @@ class PokemonController extends Controller
      * View a specific pokemon
      *
      * @param int $pokemon_id
+     * @param \Illuminate\Http\Request $request
      * @return View
      */
-    public function show($pokemon_id){
-        $pokemon = Pokemon::find($pokemon_id);
+    public function show($pokemon_id, Request $request){
         $route_name = Route::currentRouteName();
 
         return view('pokemon.show')->with([
-            'pokemon' => $pokemon,
             'route_name' => $route_name
             // permite trabajar la variable en la vista
         ]);
@@ -92,14 +91,12 @@ class PokemonController extends Controller
      * View editing form
      *
      * @param int $pokemon_id
+     * @param \Illuminate\Http\Request $request
      * @return View
      */
-    public function edit($pokemon_id){
-        $pokemon = Pokemon::find($pokemon_id);
-        return view('pokemon.edit')->with([
-            'pokemon' => $pokemon
-            // permite trabajar la variable en la vista
-        ]);
+    public function edit($pokemon_id, Request $request){
+
+        return view('pokemon.edit');
     }
 
      /**
@@ -109,23 +106,23 @@ class PokemonController extends Controller
      * @param int $pokemon_id
      * @return Redirection
      */
-    public function update(Request $request, $pokemon_id){
-        $pokemon = Pokemon::find($pokemon_id);
+    public function update($pokemon_id, Request $request){
         $params = $request->all();
-        Pokemon::validate($params, 'edit', ['pokemon_id' => $pokemon_id])->validate();
-        $this->factory->save($params, $pokemon);
+        $params['pokemon_id'] = $params['pokemon_game_id'];
+        Pokemon::validate($params, 'edit', ['pokemon_id' => $request->pokemon->id])->validate();
+        $this->factory->save($params, $request->pokemon);
         return redirect()->route('pokemon.show', $pokemon_id);
     }
 
     /**
      * Delete an existing pokemon
      *
+     * @param \Illuminate\Http\Request $request
      * @param int $pokemon_id
      * @return Redirection
      */
-    public function delete($pokemon_id){
-        $pokemon = Pokemon::find($pokemon_id);
-        $this->factory->delete($pokemon);
+    public function delete($pokemon_id, Request $request){
+        $this->factory->delete($request->pokemon);
         return redirect()->route('pokemon.index');
     }
 
