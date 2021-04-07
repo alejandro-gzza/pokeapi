@@ -27,5 +27,9 @@ class ViewComposerServiceProvider extends ServiceProvider
         View::composer(
             ['pokemon.*'], 'App\ViewComposers\PokemonViewComposer'
         );
+
+        View::composer(
+            ['users.*'], 'App\ViewComposers\UserViewComposer'
+        );
     }
 }

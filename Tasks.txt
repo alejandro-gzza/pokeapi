@@ -36,4 +36,10 @@
     2.1 Guardar usuario encontrado en variable request. user = request->user
 
 25/03/21
-Temas: view composer, javascript (como cargar un solo archivo)
+Temas: view composer, javascript (como cargar un solo archivo
+
+    1. Cambiar middleware de usuarios a singular (archivo, class, web, kernel).
+    2. Agregar view composer con usuarios.      // No recuerdo donde utilizar el request para hacer uso de view composer.
+    3. Buscar cómo agregar jquery a laravel.
+    4. Investigar como importar css y pasar los actuales.
+

@@ -6,7 +6,7 @@ use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
 
-class GetUsers
+class GetUser
 {
     /**
      * Handle an incoming request.

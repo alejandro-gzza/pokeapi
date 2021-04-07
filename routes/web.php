@@ -54,7 +54,7 @@ Route::prefix('pokemon')->group(function(){
 Route::prefix('users')->group(function(){
     Route::get('/', [App\Http\Controllers\UserController::class, 'index'])->name('users.index');
 
-    Route::prefix('{user_id}')->middleware('getUsers')->group(function(){
+    Route::prefix('{user_id}')->middleware('getUser')->group(function(){
         Route::get('/', [App\Http\Controllers\UserController::class, 'show'])->name('users.show');
 
         Route::prefix('pokemon')->group(function(){

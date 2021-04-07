@@ -1,8 +1,11 @@
 @extends('layouts.main')
+@push('scripts')
+    <script type="text/javascript" src="{{ mix('/js/pokemon/index.js') }}"></script>
+@endpush
 @section('content_main')
     <div class="row">
         <div class="col lg-12">
-            <h1 style="text-align: center">All saved Pokémon!</h1>
+            <h1 class="title" id="index">All saved Pokémon!</h1>
         </div>
     </div>
 
@@ -16,6 +19,6 @@
         </div>
         @endforeach
 
-      </div>
+    </div>
 
 @endsection

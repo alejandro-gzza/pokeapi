@@ -28,14 +28,9 @@ class UserController extends Controller
      * @return View
      */
     public function show($user_id, Request $request){
-        //$user = User::find($user_id);
-        $user = $request->user;
-        $pokemon = $user->pokemon;
         $route_name = Route::currentRouteName();
         return view('users.show')->with([
-            'pokemon' => $pokemon,
-            'route_name' => $route_name,
-            'user_id' => $user_id
+            'route_name' => $route_name
             // permite trabajar la variable en la vista
         ]);
     }

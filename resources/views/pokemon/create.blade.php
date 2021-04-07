@@ -3,7 +3,7 @@
 
 <div class="row">
     <div class="col lg-12">
-        <h1 style="text-align: center">Add a new Pokémon</h1>
+        <h1>Add a new Pokémon</h1>
     </div>
 </div>
 

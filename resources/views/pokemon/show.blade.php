@@ -2,7 +2,7 @@
 @section('content_main')
     <div class="row">
         <div class="col">
-            <h1 style="text-align: center">Show</h1>
+            <h1>Show</h1>
         </div>
     </div>
     <div class="row">

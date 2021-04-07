@@ -64,6 +64,6 @@ class Kernel extends HttpKernel
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         // My middleware
         'getPokemon' => \App\Http\Middleware\GetPokemon::class,
-        'getUsers' => \App\Http\Middleware\GetUsers::class
+        'getUser' => \App\Http\Middleware\GetUser::class
     ];
 }
