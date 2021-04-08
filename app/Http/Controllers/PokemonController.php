@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Factories\PokemonFactory;
+use App\Helpers\api;
 use App\Helpers\Pokeapi;
 use App\Models\Pokemon;
 
@@ -29,7 +30,7 @@ class PokemonController extends Controller
      * @return View
      */
     public function index(){
-        $pokemons = Pokemon::all();
+        $pokemons = Pokemon::all()->sortBy('pokemon_id');
         $route_name = Route::currentRouteName();
 
         return view('pokemon.index')->with([
@@ -171,5 +172,48 @@ class PokemonController extends Controller
 
         $pokemon = $this->factory->save($params);
         return redirect()->route('pokemon.show', [$pokemon->id]);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Api
+    |--------------------------------------------------------------------------
+    */
+
+    /**
+     * Store a pokemon from the api
+     *
+     * @param /Illuminate/Http/Request $request
+     * @return json
+     */
+    public function post_pokemon(Request $request){
+        $params = $request->all();
+
+        // Validate user params
+        $validator = Pokemon::validate($params, 'api');
+        if(!$validator->passes()){
+            return api::makeJsonResponse(400, [], $validator->errors()->first('pokemon_id'));
+        }
+
+        // Call pokeapi
+        $api = new Pokeapi;
+        $data = $api->get_pokemon_by_id($params['pokemon_id'])['body'];
+
+        // Store into database
+        $params['name'] = $data->name;
+        $params['front_img'] = $data->sprites->front_default;
+        $params['back_img'] = $data->sprites->back_default;
+        $params['weight'] = $data->weight;
+        $params['height'] = $data->height;
+        $params['type'] = $data->types[0]->type->name;
+        $params['hp'] = $data->stats[0]->base_stat;
+        $params['attack'] = $data->stats[1]->base_stat;
+        $params['defense'] = $data->stats[2]->base_stat;
+
+        $this->factory->save($params);
+
+        // Return json response
+        return api::makeJsonResponse(200, $params);
     }
 }

@@ -1,17 +1,22 @@
-console.log('Index.js');
-let header = document.getElementById('index');
-console.log(header);
-header.innerHTML = 'Todos los pokemon guardados';
-header.classList.add('strong');
-header.classList.remove('title');
-header.setAttribute('data-id', '5');
-header.setAttribute('data-type', 'grass');
-
-$(document).ready(function(){
-      $("p").hide();
+$('#ajaxSubmit').click(function(event){
+    event.preventDefault();
+    let pokemon_id = $('input[name = pokemon_id]').val();
+    let token = $('meta[name = csrf-token]').attr('content');
+    $.ajax({
+        url: '/api/pokemon/',
+        type: 'POST',
+        data: {
+            pokemon_id: pokemon_id,
+            _token: token
+        },
+        success: function(data){
+            console.log('success');
+            console.log(data);
+            window.location.reload();
+        },
+        error: function(data){
+            $('#ajaxError').html(data.responseJSON.message);
+            console.log(data);
+        }
     });
-let header2 = $('#index');
-    console.log("Header2");
-$('#index').click(function(e){
-    console.log('Clicked');
 });

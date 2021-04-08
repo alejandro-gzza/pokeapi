@@ -6,6 +6,13 @@
     <div class="row">
         <div class="col lg-12">
             <h1 class="title" id="index">All saved Pokémon!</h1>
+
+            <form id="ajaxForm">
+                <label for="name" class="form-label">Pokemon id</label>
+                <input type="text" class="form-control" id="name" name="pokemon_id">
+                <span id="ajaxError" class="text-danger"></span>
+                <button id="ajaxSubmit" type="submit" class="btn btn-danger btn-lg btn-block">Submit</button>
+            </form>
         </div>
     </div>
 

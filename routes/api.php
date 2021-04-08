@@ -17,3 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+
+Route::prefix('/pokemon')->group(function(){
+    Route::post('/', [App\Http\Controllers\PokemonController::class, 'post_pokemon'])->name('api.pokemon.post_pokemon');
+});
